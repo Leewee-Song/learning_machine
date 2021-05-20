@@ -1,0 +1,193 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器翻译的不足与展望</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="header-wrapper-news">
+
+        <div id="header-container">
+            <header class="flex-box-end">
+                <ul class="menu menu-drop">
+                    <li>
+                        <a href="./index.html">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">介绍</a>
+                        <ul>
+                            <li><a href="./principle.html">基本原理</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="./dev.html">发展历程</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="./conclusion.html">不足与展望</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="./thoughts.html">思想</a>
+                    </li>
+                    
+                    <li>
+                        <a href="./tool.html">实用</a>
+                    </li>
+                </ul>
+            </header>
+        </div>
+        <a href="./index.html" id="symbol">
+            <img  style="width: 370px;height:55px" src="./imgs/common/Websitename.png">
+        </a>
+    </div>
+    <div id="content-wrapper" class="">
+        <div id="main-content-wrapper" class="left-align">
+            <div class="news-page">
+                <h2>机器翻译的不足与展望</h2>
+                <div class="news-meta">
+                    <span class="meta-marked">来源:</span>
+                    <span>知乎 飞桨PaddlePaddle</span>
+                    <span class="meta-marked">日期:</span>
+                    <span>2021年05月12日</span>
+                </div>
+                
+                <div class="news-content">
+                <h3>挑战一：漏译</h3>
+
+                <img src="./imgs/conclusion/Picture1.png" width="700"/>
+                <span class="news-img-mark">图片1</span>
+
+                <p class="mycc">第一个挑战就是漏译，很多时候，原语言句子有些词没有被翻译出来，比如说在这个句子里面，『假』和『恶』没有被翻译出来。甚至有的时候输入一个长句子有逗号分隔，有几个子句都没有翻译出来。这确实是神经网络翻译面临的一个问题。通过刚才的讲解知道，翻译模型把原文句子整体读进去以后形成了一个向量，然后再对这个向量进行解码。翻译模型认为有些词不应该产生，从而漏掉了译文。</p>
+                
+                <p class="mycc">漏译的原因是什么，如何解决这个问题？这方面有很多工作，下面我就从几个方面去讲一下。我们今年有一篇论文从数据方面去分析。我们发现漏译与词语的熵成正相关关系，这个词的熵越大，漏译的可能性越大。它所对应的目标语言词越多，概率越分散（熵越大），越有可能被漏译。</p>
+
+                <p class="mycc">左边的例子，S1对应3种不同的翻译，（s1,t1) (s1,t2) (s1, t3 t4)，它的熵就比较大。我们把所有对应的翻译统一替换为一个特殊词『stoken4s1』，以降低词语翻译的熵值。右边呢是我们提出来的三种方法，去改善翻译结果，包括pre-training, multitask learning, two-pass decoding。大家有兴趣的话，可以去看论文。</p>
+                
+                <img src="./imgs/conclusion/Picture2.png" width="700"/>
+                <span class="news-img-mark">图片2</span>
+
+                <p class="mycc">从实验结果来看，相比Transformer，在中英翻译质量上有显著提高，高熵值词语的漏译比例显著下降。</p>
+
+                <img src="./imgs/conclusion/Picture3.png" width="700"/>
+                <span class="news-img-mark">图片3</span>          
+
+                <h3>挑战二：数据稀疏</h3>
+
+
+                <img src="./imgs/conclusion/Picture4.png" width="700"/>
+                <span class="news-img-mark">图片4</span> 
+
+                <p class="mycc">第二个挑战就是数据稀疏。相比于统计机器翻译，这个问题对神经网络翻译而言，更严重。实验表明，神经网络对于数据量更敏感。</p>
+
+                <img src="./imgs/conclusion/Picture5.png" width="700"/>
+                <span class="news-img-mark">图片5</span>  
+ 
+                <p class="mycc">针对数据稀疏问题，我们提出了一个多任务学习的多语言翻译模型。在进行多语言翻译的时候，源语言共享编码器，在解码端，不同的语言，使用不同的解码器。这样在源语言端就会共享编码器的信息，从而缓解数据稀疏问题。后来，加拿大蒙特利尔大学、Google等在此方向上陆续开展了多个工作。</p>
+
+                <img src="./imgs/conclusion/Picture6.png" width="700"/>
+                <span class="news-img-mark">图片6</span>  
+
+                <p class="mycc">这篇论文是2018年EMNLP上的best paper，提出了一个统一的框架。A)里面蓝色的点和红色的点分别代表两种不同的语言句子。如何通过两种语言的单语数据构建翻译系统呢？首先要做一个初始化，B）是初始化。首先构建一个词典，把这两种语言之间的词对齐。C）是语言模型，基于单语数据，可以训练语言模型，用来衡量这个语言的流利度。那么D）是什么? D）是一个称作Back Translation的技术，是目前大家常用的一个用于增强数据的方法。用B）初始化后构建的一个词典，就可以从一种语言翻译为另外一种语言，哪怕是先基于词的翻译。然后，用另外一种语言的语言模型去对译文进行衡量。然后把得分高的句子挑出来，再翻译回去，这一过程称作Back Translation，然后再用原来那种语言的语言模型去衡量这个句子好还是不好。这样一轮一轮的迭代，数据就会变得越来越好，系统翻译质量也会越来越好。</p>
+
+                
+                <img src="./imgs/conclusion/Picture7.png" width="700"/>
+                <span class="news-img-mark">图片7</span> 
+
+                <h3>挑战三：引入知识</h3>
+ 
+                <p class="mycc">第三个挑战就是引入知识，如何将更多丰富的知识引入翻译模型是机器翻译长期面临的挑战。这个例子中，中文句子中『横流』对应到目标语言端是没有翻译出来的，用一个特殊的记号叫UNK（unknown word）来标记。</p>
+
+                <img src="./imgs/conclusion/Picture8.png" width="700"/>
+                <span class="news-img-mark">图片8</span> 
+                
+                <p class="mycc">那么我们做一个什么样的工作呢？我们引入了几种知识，第一种就是叫短语表或者叫词表。如果发现『横流』这个词没有被翻译出来，我们就去查这个词典，这个词典就作为一个外部知识被引入进来了。同时，那我们还引入了一个语言模型，语言模型去衡量目标语言的这个句子是不是流畅。同时，我们引入一个长度奖励特征去奖励长句子。因为句子越长，可能漏掉的信息就越少。这个工作首次将统计机器翻译中的特征引入神经网络翻译，可以作为引入知识的一个框架。</p>
+                <img src="./imgs/conclusion/Picture9.png" width="700"/>
+                <span class="news-img-mark">图片9</span> 
+ 
+                <p class="mycc">但是目前来说，引入知识还是比较表层的。知识的引入，还需要更多更深入的工作。比如说这个例子， 这个句子是存在歧义的。『中巴』 在没有给上下文的时候，是无法判断『巴』是哪个国家的简称。
+                但是上面的句子，有一个限定，“金砖框架”。这个时候，人们就知道该如何翻译了。但是，机器能不能知道？大家可以去翻译引擎上去验证。因为人是知道中国跟哪些国家是金砖国家，但是机器没有这个知识。怎么把这个知识交给机器去做，这是一个非常挑战的问题。</p>
+
+
+                <h3>挑战四：可解释性</h3>
+                
+                <img src="./imgs/conclusion/Picture10.png" width="700"/>
+                <span class="news-img-mark">图片10</span> 
+ 
+                <p class="mycc">第四个挑战，是可解释性：神经网络翻译到底是神还是神经？虽然人们可以设计和调整网络结构，去优化系统，提高质量。但是对于该方法还缺乏深入的理解。也有很多工作去试图研究网络内部工作机理。清华大学有一篇文章从注意力的角度去进行研究。</p>
+
+                <img src="./imgs/conclusion/Picture11.png" width="700"/>
+                <span class="news-img-mark">图片11</span> 
+
+                <p class="mycc">比如左边的例子，出现了一个UNK，那个UNK是怎么产生的，它虽然没有被翻译出来，但是出现在正确的位置，占了一个位置。通过Attention对应关系，可以看到这个UNK对应到『债务国』。右边例子是一个重复翻译的现象。神经网络机器翻译除了经常漏翻译之外，还会经常重复翻译。比如说出现了两个“history”。那么通过这个对应关系我们就可以看到，第6个位置上的“history”是重复出现的，它的出现不仅跟第一个位置“美国人”和第二个位置“历史”相关，还跟第5个位置“the”相关。因为产生了一个定冠词“the”，模型认为这个地方应该出现一个“history”，这篇文章对这样的例子进行了大量的分析，并且给出了一些分析结果和解决方案。如需进一步了解，可以看原始论文。</p>
+
+                <h3>挑战五：引入知识</h3>
+                
+                <img src="./imgs/conclusion/Picture12.png" width="700"/>
+                <span class="news-img-mark">图片12</span> 
+ 
+                第五个挑战就是引入知识，如何将更多丰富的知识引入翻译模型是机器翻译长期面临的挑战。这个例子中，中文句子中『横流』对应到目标语言端是没有翻译出来的，用一个特殊的记号叫UNK（Unknown Word）来标记。
+                我们的方法输出的结果。可以看到，定冠词、代词的加入提升了句子间的连贯性。
+ 
+                 <img src="./imgs/conclusion/Picture13.png" width="700"/>
+                <span class="news-img-mark">图片13</span> 
+
+                我们提出了一个两步解码的方法。在第一轮解码中单独生成每个句子的初步翻译结果，在第二轮解码中利用第一轮翻译的结果进行翻译内容润色，并且提出使用增强式学习模型来奖励模型产生更流畅的译文。这是我们系统输出的一个结果，整体上，流畅度提高了。 
+
+                <img src="./imgs/conclusion/Picture14.png" width="700"/>
+                <span class="news-img-mark">图片14</span> 
+
+
+                </div>
+
+                
+            </div>
+        </div>
+
+        <div id="aside-wrapper" class="left-align wrap-aside wrap-hidden">
+            <div>
+                <ul class="menu menu-dark">
+                    <li><a href="#">图片导航</a></li>
+                </ul>
+                <div class="section-content section-content-img">
+                    <div>
+                        <img src="./imgs/common/2.jpg" alt="">
+                        <a href="./tool.html">力推的翻译软件</a>
+                        <span>5.11</span>
+                    </div>
+                    <div>
+                        
+                        <img src="./imgs/common/2.jpg" alt="">
+                    <a href="" >
+                        <a href="./principle.html">机器翻译基本原理</a>
+                    </a>
+                        <span>5.12</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="footer-wrapper" class="">
+        <div class="footer">
+            <div><span>地址：</span>北京市海淀区西三环北路2号/19号</div>
+        </div>
+        <div>
+            <div><span>邮编：</span>100089</div>
+        </div>
+        <div>
+            <img src="./assets/img/icon1.jpg" alt="1">
+            <span>作者微信</span>
+        </div>
+        <div>
+            <span>京ICP备xxxxxx号</span>
+            
+        </div>
+        <div>
+            <img src="./assets/img/icon2.png" alt="2">
+            <span>公网安备 xxxxxx</span>
+            
+        </div>
+    </div>
+</body>
+</html>

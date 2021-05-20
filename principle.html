@@ -1,0 +1,127 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器翻译基本原理</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="header-wrapper-news">
+
+        <div id="header-container">
+            <header class="flex-box-end">
+                <ul class="menu menu-drop">
+                    <li>
+                        <a href="./index.html">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">介绍</a>
+                        <ul>
+                            <li><a href="./principle.html">基本原理</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="./dev.html">发展历程</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="./conclusion.html">不足与展望</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="./thoughts.html">思想</a>
+                    </li>
+                    
+                    <li>
+                        <a href="./tool.html">实用</a>
+                    </li>
+                </ul>
+            </header>
+        </div>
+        <a href="./index.html" id="symbol">
+            <img  style="width: 370px;height:55px" src="./imgs/common/Websitename.png">
+        </a>
+    </div>
+    <div id="content-wrapper" class="">
+        <div id="main-content-wrapper" class="left-align">
+            <div class="news-page">
+                <h2>机器翻译基本原理</h2>
+                <div class="news-meta">
+                    <span class="meta-marked">来源:</span>
+                    <span>知乎-飞桨PaddlePaddle</span>
+                    <span class="meta-marked">日期:</span>
+                    <span>2021年05月11日</span>
+                </div>
+                
+                <div class="news-content">
+                    <p class="mycc">机器翻译（Machine Translation，MT），又称自动翻译，是指利用计算机将一种自然语言（源语）转换为另一种自然语言（译语）的过程，传统上隶属于计算语言学研究范畴。</p>
+                    <img src="./imgs/principle/Picture1.png" width="700"/>
+                    <span class="news-img-mark">图片1</span>
+                    <p class="mycc">Source代表源语言，Target标记代表目标语言。机器翻译任务就是把源语言的句子翻译成目标语言的句子。</p>
+                    
+                    <p class="mycc">机器翻译是人工智能的终极目标之一，但面临如下的挑战。</p>
+                    <p class="mycc">第一个挑战，译文选择。在翻译一个句子的时候，会面临很多选词的问题，因为语言中一词多义的现象比较普遍。比如这个例子中，源语言句子中的『看』，可以翻译成『look』、『watch』 『read 』和 『see』等词，如果不考虑后面的宾语『书』的话，这几个译文都对。在这个句子中，只有机器翻译系统知道『看』的宾语『书』，才能做出正确的译文选择，把『看』翻译为『read』 ，『read a book』。 </p>
+
+                    <img src="./imgs/principle/Picture2.png" width="700"/>
+                    <span class="news-img-mark">图片2</span>
+
+                    <p class="mycc">第二个挑战，是词语顺序的调整。由于文化及语言发展上的差异，我们在表述的时候，有时候先说这样一个成份，后面说另外一个成份 ，但是，在另外一种语言中，这些语言成分的顺序可能是完全相反的。比如在这个例子中，『在周日』，这样一个时间状语在英语中习惯上放在句子后面。再比如，像中文和日文的翻译，中文的句法是『主谓宾』，而日文的句法是『主宾谓』，日文把动词放在句子最后。比如中文说『我吃饭』，那么日语呢就会说『我饭吃』。当句子变长时，语序调整会更加复杂。</p>
+
+                    <img src="./imgs/principle/Picture3.png" width="700"/>
+                    <span class="news-img-mark">图片3</span>
+
+                    <p class="mycc">第三个挑战，数据稀疏。据不完全统计，现在人类的语言大约有超过五千种。现在的机器翻译技术大部分都是基于大数据的，只有在大量的数据上训练才能获得一个比较好的效果。而实际上，语言数量的分布非常不均匀的。右边的饼图显示了中文相关语言的一个分布情况，大家可以看到，百分之九十以上的都是中文和英文的双语句对，中文和其他语言的资源呢，是非常少的。在非常少的数据上，想训练一个好的系统是非常困难的。 </p>
+                    
+                    <img src="./imgs/principle/Picture4.png" width="700"/>
+                    <span class="news-img-mark">图片4</span>
+
+                </div>
+
+                
+            </div>
+        </div>
+
+        <div id="aside-wrapper" class="left-align wrap-aside wrap-hidden">
+            <div>
+                <ul class="menu menu-dark">
+                    <li><a href="#">图片导航</a></li>
+                </ul>
+                <div class="section-content section-content-img">
+                    <div>
+                        <img src="./imgs/common/2.jpg" alt="">
+                        <a href="./dev.html">机器翻译发展历程</a>
+                        <span>5.11</span>
+                    </div>
+                    <div>
+                        <img src="./imgs/common/2.jpg" alt="">
+                        <a href="./tool.html">力推的翻译软件</a>
+                        <span>5.12</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="footer-wrapper" class="">
+        <div class="footer">
+            <div><span>地址：</span>北京市海淀区西三环北路2号/19号</div>
+        </div>
+        <div>
+            <div><span>邮编：</span>100089</div>
+        </div>
+        <div>
+            <img src="./assets/img/icon1.jpg" alt="1">
+            <span>作者微信</span>
+        </div>
+        <div>
+            <span>京ICP备xxxxxx号</span>
+            
+        </div>
+        <div>
+            <img src="./assets/img/icon2.png" alt="2">
+            <span>公网安备 xxxxxx</span>
+            
+        </div>
+    </div>
+
+</body>
+</html>
